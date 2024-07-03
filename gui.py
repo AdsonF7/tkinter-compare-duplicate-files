@@ -42,6 +42,7 @@ class GUI(Tk):
         messagebox.showerror(title="Compare result", message="The files aren't the same")
     else:
       messagebox.showerror(title="Invalid Path", message="The path entered is not valid")
+      
   def clear_text(self):
     self.tx_files_list.delete("1.0", "end")
   
