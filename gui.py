@@ -16,17 +16,17 @@ class GUI(Tk):
     self.resizable(True, False)
     self.__var_ck_auto_clear = IntVar()
     self.__var_ck_auto_clear.set(1)
-    self.__var_ck_delete_duplicate = IntVar()
-    self.__var_ck_delete_duplicate.set(1)
+    self.__var_ck_delete_duplicates = IntVar()
+    self.__var_ck_delete_duplicates.set(1)
     self.columnconfigure(0, weight=1)
     lb_files_list = Label(self, text="Files List", anchor=W)
     lb_files_list.grid(column=0, row=0, padx=(10, 10), sticky=NSEW, pady=(10, 0))
     self.__tx_files_list = Text(self, height=5)
     self.__tx_files_list.grid(column=0, row=1, padx=(10, 10), sticky=NSEW)
-    ck_auto_clear = Checkbutton(self, text="Auto Clear", variable=self.active_auto_clear, anchor=W)
+    ck_auto_clear = Checkbutton(self, text="Auto Clear", variable=self.__var_ck_auto_clear, anchor=W)
     ck_auto_clear.grid(column=0, row=2, padx=(10, 10), sticky=NSEW)
-    ck_auto_clear = Checkbutton(self, text="Delete File If Duplicated", variable=self.active_delete_duplicate, anchor=W)
-    ck_auto_clear.grid(column=0, row=3, padx=(10, 10), sticky=NSEW)
+    ck_delete_duplicates = Checkbutton(self, text="Delete File If Duplicated", variable=self.__var_ck_delete_duplicates, anchor=W)
+    ck_delete_duplicates.grid(column=0, row=3, padx=(10, 10), sticky=NSEW)
     frame_bottom = Frame(self)
     frame_bottom.grid(column=0, row=4, padx=(10, 10), pady=(10, 10))
     bt_compare = Button(frame_bottom, text="Compare")
@@ -40,22 +40,14 @@ class GUI(Tk):
   def path_list(self):
     return self.__tx_files_list.get("1.0", "end-1c").split("\n")
   
-  @property
-  def active_auto_clear(self):
-    return self.__var_ck_auto_clear
-  
-  @property
-  def active_delete_duplicate(self):
-    return self.__var_ck_delete_duplicate
-
   def bt_clear_click(self, event):
     self.tx_clear_text()
     
   def bt_compare_click(self, event):
-    equal = self.__root.compare_files(self.path_list, self.__var_ck_auto_clear.get())
+    equal = self.__root.compare_files(self.path_list, self.__var_ck_delete_duplicates.get())
     self.show_message(equal)
-    if self.__var_ck_delete_duplicate.get():
-      self.clear_text()
+    if self.__var_ck_auto_clear.get():
+      self.tx_clear_text()
 
   def tx_clear_text(self):
     self.__tx_files_list.delete("1.0", "end")
