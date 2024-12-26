@@ -2,7 +2,7 @@ from tkinter import Tk, IntVar, Grid, Frame, Checkbutton, Label, Text, Button, W
 
 class GUI(Tk):
 
-  messages = {
+  MESSAGES = {
     True: ["Compare Result", "The files are the same", messagebox.showinfo],
     False: ["Compare Result", "The files aren't the same", messagebox.showerror],
     None: ["Invalid Path", "The path entered is not valid", messagebox.showerror]
@@ -53,7 +53,7 @@ class GUI(Tk):
     self.__tx_files_list.delete("1.0", "end")
 
   def show_message(self, value):
-    message = GUI.messages[value]
+    message = GUI.MESSAGES[value]
     title = message[0]
     text = message[1]
     fn = message[2]
